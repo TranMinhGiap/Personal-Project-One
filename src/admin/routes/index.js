@@ -10,12 +10,16 @@ const routesAdmin = [
       {
         index: true,
         element: <Dashboard/>
-      },
-      {
-        path: "login",
-        element: <Login/>
       }
     ]
+  },
+  {
+    path: "/admin/login",
+    element: <Login/>
+  },
+  {
+    path: "/admin/register",
+    element: <Login/>
   }
 ];
 
