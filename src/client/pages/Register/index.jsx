@@ -1,21 +1,40 @@
-import { Form, Input, Button, Typography, Card } from "antd";
+import { Form, Input, Button, Typography, Card, message } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate, Link } from "react-router-dom";
+import { POST } from "../../../utils/requests";
+import Cookies from 'js-cookie';
+import { useState } from "react";
 
 const Register = () => {
+
+  const [messageApi, contextHolder] = message.useMessage();
+  const [loading, setLoading] = useState(false);
 
   const { Title } = Typography;
 
   const navigate = useNavigate();
 
   // call api
-  const onFinish = (values) => {
-    console.log("Register values:", values);
-    navigate("/");
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const result = await POST("/api/v1/users/register", values);
+      // Lưu token
+      Cookies.set('tokenUser', result.token, { expires: 1, secure: true, sameSite: 'strict' });
+      navigate("/");
+    } catch (error) {
+      messageApi.open({
+        type: 'error',
+        content: error.message
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
+      {contextHolder}
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
         <Card style={{ width: 450, padding: 20, boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
           <Title level={3} style={{ textAlign: "center" }}>
@@ -70,7 +89,7 @@ const Register = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
+              <Button type="primary" htmlType="submit" block loading={loading} disabled={loading}>
                 Đăng ký
               </Button>
             </Form.Item>
