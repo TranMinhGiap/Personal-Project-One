@@ -2,13 +2,22 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GET } from '../../../utils/requests';
 
 // Thunk fetch user
-export const fetchUser = createAsyncThunk('auth/fetchUser', async () => {
+export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, {getState, rejectWithValue}) => {
 
   try {
-    const result = await GET("/user/info");
-    return result;
+    // call api lấy thông tin user dựa trên token gửi kèm
+    const result = await GET(`/api/v1/admin/my-accounts`);
+    // console.log(result);
+    const user = {
+      user: {
+        ...result.data
+      },
+      token: result.data.token
+    }
+    return user;
+
   } catch (error) {
-    throw new Error(error.message || 'Fetch failed');
+    return rejectWithValue(error.message || 'Fetch failed');
   }
 });
 
@@ -25,11 +34,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action) => {
-      const { user, token } = action.payload;
-      state.isLoggedIn = true;
-      state.user = user;
-      state.permissions = user.permissions || [];
-      state.token = token;
+      // console.log(action.payload);
+      // Chỉ cần tạo ra action còn thunk sẽ xử lý
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -45,9 +51,10 @@ const authSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = { ...state.user, ...action.payload.user };
         state.permissions = action.payload.user.permissions || [];
         state.isLoggedIn = true;
+        state.token = action.payload.token;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.loading = false;

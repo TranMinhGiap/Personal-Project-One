@@ -3,12 +3,13 @@ import Cookies from 'js-cookie';
 const API_SERVER = process.env.REACT_APP_API_URL;
 
 const getAuthHeader = () => {
-  const token = Cookies.get('tokenUser');
+  const token = Cookies.get('tokenAdmin');
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 // 🔹 Hàm fetch dùng chung
 const request = async (method, path, data) => {
+  console.log(API_SERVER + path);
   const options = {
     method,
     headers: {
