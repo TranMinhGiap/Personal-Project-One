@@ -1,6 +1,7 @@
 import AdminLayout from "../components/layout/AdminLayout";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
+import ProductCategory from "../pages/ProductCategory";
 
 const routesAdmin = [
   {
@@ -10,6 +11,10 @@ const routesAdmin = [
       {
         index: true,
         element: <Dashboard/>
+      },
+      {
+        path: "product-category",
+        element: <ProductCategory/>
       }
     ]
   },

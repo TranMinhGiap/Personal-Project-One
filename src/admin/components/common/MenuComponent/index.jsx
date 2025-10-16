@@ -6,14 +6,15 @@ import {
   MailOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const MenuComponent = (props) => {
-
+  const prefix = "/admin";
   const { collapsed } = props;
 
   const items = [
-    { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
-    { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
+    { key: '1', icon: <PieChartOutlined />, label: <Link to={`${prefix}`}>Dashboard</Link> },
+    { key: '2', icon: <DesktopOutlined />, label: <Link to={`${prefix}/product-category`}>Product Category</Link> },
     { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
     {
       key: 'sub1',

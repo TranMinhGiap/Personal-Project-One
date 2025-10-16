@@ -7,48 +7,58 @@ const getAuthHeader = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-// 🔹 Hàm fetch dùng chung
 const request = async (method, path, data) => {
-  console.log(API_SERVER + path);
+  let url = API_SERVER + path;
+
+  // Nếu là GET => build query string
+  if (method === 'GET' && data && typeof data === 'object') {
+    const filteredParams = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== undefined && v !== null && v !== '')
+    );
+    const params = new URLSearchParams(filteredParams).toString();
+    if (params) url += (url.includes('?') ? '&' : '?') + params;
+  }
+
   const options = {
     method,
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       ...getAuthHeader(),
     },
   };
 
-  if (data) options.body = JSON.stringify(data);
+  // Nếu không phải GET => thêm body
+  if (method !== 'GET' && data) {
+    options.body = JSON.stringify(data);
+  }
 
   let response;
   try {
-    response = await fetch(API_SERVER + path, options);
-  } catch (fetchErr) {
-    // Custom message cho network error (server down, no connection)
-    if (fetchErr.name === 'TypeError' && fetchErr.message.includes('Failed to fetch')) {
-      throw new Error('Server không khả dụng. Vui lòng kiểm tra kết nối mạng hoặc khởi động server.');
+    response = await fetch(url, options);
+  } catch (err) {
+    if (err.message.includes('Failed to fetch')) {
+      throw new Error('Server không khả dụng. Kiểm tra lại kết nối hoặc khởi động server.');
     }
-    // Nếu lỗi khác (ví dụ: AbortError từ timeout)
-    throw new Error('Lỗi kết nối không xác định. Vui lòng thử lại.');
+    throw new Error('Lỗi kết nối không xác định.'); 
   }
 
   let json;
   try {
     json = await response.json();
-  } catch (err) {
+  } catch {
     throw new Error('Backend không trả về JSON hợp lệ');
   }
-  
+
   if (!response.ok) {
-    throw new Error(json.message ||`HTTP error! Status: ${response.status}`);
+    throw new Error(json.message || `HTTP ${response.status}: ${response.statusText}`);
   }
 
   return json;
 };
 
-// 🔹 Các hàm con 
-export const GET = (path) => request("GET", path);
-export const POST = (path, data) => request("POST", path, data);
-export const PATCH = (path, data) => request("PATCH", path, data);
-export const DELETE = (path) => request("DELETE", path);
+// 🔹 Các hàm tiện dụng
+export const GET = (path, params) => request('GET', path, params);
+export const POST = (path, data) => request('POST', path, data);
+export const PATCH = (path, data) => request('PATCH', path, data);
+export const DELETE = (path, data) => request('DELETE', path, data);
