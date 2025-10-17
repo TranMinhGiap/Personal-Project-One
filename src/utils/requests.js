@@ -32,7 +32,7 @@ const request = async (method, path, data) => {
   if (method !== 'GET' && data) {
     options.body = JSON.stringify(data);
   }
-
+  console.log(url);
   let response;
   try {
     response = await fetch(url, options);
