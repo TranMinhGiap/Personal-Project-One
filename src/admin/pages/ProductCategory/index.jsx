@@ -22,7 +22,10 @@ const ProductCategory = () => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 8,
-    total: 0
+    total: 0,
+    showSizeChanger: true,
+    pageSizeOptions: [ 8, 15, 25, 35],
+    showQuickJumper: true
   });
   const [filters, setFilters] = useState({ status: "all" });
   const [messageApi, contextHolder] = message.useMessage();
