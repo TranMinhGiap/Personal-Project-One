@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Flex, Space, Table, message, Select, Badge, Input, Dropdown } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import { GET } from '../../../utils/requests';
+import ActionTable from '../../components/common/ActionTable';
 
 //==========================================================
 const { Search } = Input;
@@ -10,6 +11,13 @@ const columns = [
   { title: 'Tên danh mục', dataIndex: 'title', sorter: true },
   { title: 'Trạng thái', dataIndex: 'status' },
   { title: 'Vị trí', dataIndex: 'position' },
+  {
+    dataIndex: "action",
+    width: 70,
+    render: (_, record) => (
+      <ActionTable record={record}/>
+    )
+  }
 ];
 
 //=========================================================
