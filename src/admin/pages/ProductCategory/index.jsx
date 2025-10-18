@@ -7,7 +7,7 @@ import { GET } from '../../../utils/requests';
 const { Search } = Input;
 
 const columns = [
-  { title: 'Tên danh mục', dataIndex: 'title' },
+  { title: 'Tên danh mục', dataIndex: 'title', sorter: true },
   { title: 'Trạng thái', dataIndex: 'status' },
   { title: 'Vị trí', dataIndex: 'position' },
 ];
@@ -15,6 +15,8 @@ const columns = [
 //=========================================================
 
 const ProductCategory = () => {
+
+  console.log("***");
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -81,9 +83,14 @@ const ProductCategory = () => {
     },
   ];
 
-  const handleTableChange = (newPagination, filters, sorter) => {
+  const handleTableChange = (newPagination, newFilters, newSorter) => {
     console.log(newPagination);
     setPagination(newPagination);
+    setFilters({
+      ...filters,
+      sortKey: newSorter.field,
+      sortValue: newSorter.order === "ascend" ? "asc" : newSorter.order === "descend" ? "desc" : undefined
+    })
   }
 
   const start = () => {
@@ -102,6 +109,7 @@ const ProductCategory = () => {
     onChange: onSelectChange
   };
   const hasSelected = selectedRowKeys.length > 0;
+  console.log("===");
   return (
     <>
       {contextHolder}
