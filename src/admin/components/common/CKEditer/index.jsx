@@ -34,6 +34,8 @@ class MyUploadAdapter {
             let imageUrl = '';
             if (uploadRes.url) {
               imageUrl = uploadRes.url; // Khớp với backend: { url: secure_url }
+            } else if (uploadRes.urls && uploadRes.urls.length > 0) {
+              imageUrl = uploadRes.urls[0]; // Fallback cho multiple mode (lấy đầu tiên)
             } else if (Array.isArray(uploadRes) && uploadRes[0]?.url) {
               imageUrl = uploadRes[0].url; // Fallback nếu array
             }

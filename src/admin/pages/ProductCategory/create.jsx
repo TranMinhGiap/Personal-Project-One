@@ -2,12 +2,14 @@ import { Card, Form, Input, Col, Row, Select, Button, InputNumber, Badge } from 
 import { useEffect, useState } from 'react';
 import { GET } from '../../../utils/requests';
 import MyEditor from '../../components/common/CKEditer';
+import UploadMultipleImages from '../../components/common/UploadMultipleImages';
 
 const CreateProductCategory = () => {
 
   const [form] = Form.useForm();
   const [category, setCategory] = useState([]);
   const [description, setDescription] = useState('');
+  const [thumbnails, setThumbnails] = useState([]);
 
   const customRule = (message) => {
     const rule = [{ required: true, message: `${message}` }];
@@ -19,6 +21,7 @@ const CreateProductCategory = () => {
       const payload = {
         ...values,
         description, 
+        thumbnail: thumbnails,
       };
       // await POST("/api/v1/admin/product-category/create", payload); 
       // message.success("Thêm danh mục thành công!");
@@ -106,14 +109,23 @@ const CreateProductCategory = () => {
                 />
               </Form.Item>
             </Col>
+
             <Col xs={24}>
               <Form.Item
-                label="Ảnh"
+                label="Ảnh" // ← Thay Input bằng upload multiple
                 name="thumbnail"
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
+                getValueFromEvent={(value) => value} // Để form nhận array
+                initialValue={thumbnails}
               >
-                <Input />
+                <UploadMultipleImages
+                  value={thumbnails}
+                  onChange={(urls) => {
+                    setThumbnails(urls);
+                    form.setFieldsValue({ thumbnail: urls }); // Sync với form
+                  }}
+                />
               </Form.Item>
             </Col>
             
