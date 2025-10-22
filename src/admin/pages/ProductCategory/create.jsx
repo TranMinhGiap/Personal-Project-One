@@ -1,8 +1,10 @@
-import { Card, Form, Input, Col, Row, Select, Button, InputNumber, Badge } from 'antd';
+import { Card, Form, Input, Col, Row, Select, Button, InputNumber, Badge, notification } from 'antd';
 import { useEffect, useState } from 'react';
-import { GET } from '../../../utils/requests';
+import { GET, POST } from '../../../utils/requests';
 import MyEditor from '../../components/common/CKEditer';
 import UploadMultipleImages from '../../components/common/UploadMultipleImages';
+import { useNavigate } from "react-router-dom";
+import { CloseCircleFilled } from '@ant-design/icons';
 
 const CreateProductCategory = () => {
 
@@ -10,6 +12,9 @@ const CreateProductCategory = () => {
   const [category, setCategory] = useState([]);
   const [description, setDescription] = useState('');
   const [thumbnails, setThumbnails] = useState([]);
+  const navigate = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
+  const [loading, setLoading] = useState(false);
 
   const customRule = (message) => {
     const rule = [{ required: true, message: `${message}` }];
@@ -17,19 +22,29 @@ const CreateProductCategory = () => {
   }
 
   const onFinish = async (values) => { 
+    setLoading(true);
     try {
       const payload = {
         ...values,
         description, 
         thumbnail: thumbnails,
       };
-      // await POST("/api/v1/admin/product-category/create", payload); 
-      // message.success("Thêm danh mục thành công!");
-      // form.resetFields();  
-      // setDescription('');  
+      await POST("/api/v1/admin/product-category/create", payload); 
+      form.resetFields();  
+      setDescription('');  
       console.log(payload);
+      navigate("/admin/product-category", { state: { success: true }});
     } catch (error) {
-      // message.error("Lỗi thêm danh mục!");
+      api.open({
+        message: "Có lỗi khi thêm danh mục sản phẩm! Vui lòng thử lại",
+        description: error.message,
+        showProgress: true,
+        pauseOnHover: true,
+        icon: <CloseCircleFilled style={{ color: '#108ee9' }} />,
+        placement: "topRight"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,7 +62,8 @@ const CreateProductCategory = () => {
 
   return (
     <>
-      <h3>Create Product Category</h3>
+      {contextHolder}
+      <h2>Create Product Category</h2>
       <Card>
         <Form
           form={form}
@@ -141,7 +157,14 @@ const CreateProductCategory = () => {
             </Col>
             <Col xs={24}>
               <Form.Item>
-                <Button type="primary" variant='outlined' htmlType="submit">Thêm mới</Button>
+                <Button 
+                  type="primary" 
+                  variant='outlined' 
+                  htmlType="submit"
+                  loading={loading}
+                >
+                  Thêm mới
+                </Button>
               </Form.Item>
             </Col>
           </Row>
