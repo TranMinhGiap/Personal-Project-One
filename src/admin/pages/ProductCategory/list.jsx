@@ -5,6 +5,7 @@ import { GET } from '../../../utils/requests';
 import ActionTable from '../../components/common/ActionTable';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTableSearch from '../../../shared/helper/useTableSearch';
+import EditablePosition from '../../components/common/EditablePosition';
 
 const ProductCategoryList = () => {
 
@@ -109,7 +110,13 @@ const ProductCategoryList = () => {
       sorter: true,
     },
     { title: 'Trạng thái', dataIndex: 'status' },
-    { title: 'Vị trí', dataIndex: 'position' },
+    { 
+      title: 'Vị trí', 
+      dataIndex: 'position',
+      render: (_, record) => (
+        <EditablePosition value={record.position} categorytId={record["_id"]} />
+      )
+    },
     {
       dataIndex: "action",
       width: 70,

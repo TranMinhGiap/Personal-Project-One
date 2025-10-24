@@ -74,10 +74,12 @@ const useTableSearch = (onFilterChange) => {
       <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
     ),
 
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
+    filterDropdownProps: {
+      onOpenChange: (visible) => {
+        if (visible) {
+          setTimeout(() => searchInput.current?.select(), 100);
+        }
+      },
     },
 
     render: (text) =>
