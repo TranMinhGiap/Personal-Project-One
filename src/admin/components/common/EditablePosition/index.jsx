@@ -25,8 +25,8 @@ const EditablePosition = ({ value: initialValue, categorytId }) => {
     try {
       await PATCH(`/api/v1/admin/product-category/change-position/${categorytId}`, { position : value} )
       api.open({
-        message: 'Thay đổi vị trí danh mục sản phẩm thành công',
-        description: "Đã thêm 1 danh mục mới",
+        message: 'Thay đổi vị trí thành công',
+        description: "Danh mục sản phẩm đã được thay đổi vị trí",
         icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         showProgress: true,
         pauseOnHover: true,

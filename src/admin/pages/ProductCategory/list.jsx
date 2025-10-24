@@ -6,6 +6,7 @@ import ActionTable from '../../components/common/ActionTable';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTableSearch from '../../../shared/helper/useTableSearch';
 import EditablePosition from '../../components/common/EditablePosition';
+import ChangeStatusTable from '../../components/common/ChangeStatusTable';
 
 const ProductCategoryList = () => {
 
@@ -109,7 +110,13 @@ const ProductCategoryList = () => {
       ...getColumnSearchProps('title', 'Tìm theo tên danh mục'),
       sorter: true,
     },
-    { title: 'Trạng thái', dataIndex: 'status' },
+    { 
+      title: 'Trạng thái', 
+      dataIndex: 'status',
+      render: (_, record) => (
+        <ChangeStatusTable id={record["_id"]} status={record.status}/>
+      )
+    },
     { 
       title: 'Vị trí', 
       dataIndex: 'position',
