@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Flex, Space, Table, message, Select, Badge, Input, Dropdown, notification, Image } from 'antd';
+import { Button, Flex, Space, Table, message, Select, Badge, Dropdown, notification, Image } from 'antd';
 import { DownloadOutlined, PlusCircleOutlined, SmileOutlined } from '@ant-design/icons';
 import { GET } from '../../../utils/requests';
 import ActionTable from '../../components/common/ActionTable';
@@ -7,11 +7,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useTableSearch from '../../../shared/helper/useTableSearch';
 import EditablePosition from '../../components/common/EditablePosition';
 import ChangeStatusTable from '../../components/common/ChangeStatusTable';
+import ChangeMulti from '../../components/common/ChangeMulti';
 
 const ProductCategoryList = () => {
 
   //==========================================================
-  const { Search } = Input;
 
   //=========================================================
 
@@ -32,6 +32,7 @@ const ProductCategoryList = () => {
     pageSizeOptions: [ 8, 15, 25, 35],
     showQuickJumper: true
   });
+  const [reload, setReload] = useState(true);
   const [filters, setFilters] = useState({ status: "all" });
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -49,9 +50,14 @@ const ProductCategoryList = () => {
     setPagination(prev => ({ ...prev, current: 1 })); 
   });
 
+  const handleReload = () => {
+    setSelectedRowKeys([]);
+    setReload(!reload);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
-      // setLoading(true);
+      setLoading(true);
       if (location.state?.success) {
         api.open({
           message: 'Thêm mới danh mục sản phẩm thành công',
@@ -82,7 +88,7 @@ const ProductCategoryList = () => {
       }
     }
     fetchData();
-  }, [pagination.current, pagination.pageSize, filters]);
+  }, [pagination.current, pagination.pageSize, filters, reload]);
 
   console.log(params);
 
@@ -169,7 +175,7 @@ const ProductCategoryList = () => {
     }, 400);
   };
   const onSelectChange = newSelectedRowKeys => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection = {
@@ -183,19 +189,21 @@ const ProductCategoryList = () => {
       {contextHolder}
       {contextHolderNoti}
       <Flex gap="middle" vertical>
-        <Flex align="center" gap="middle">
-          <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-            Reload
-          </Button>
+        <Flex align="center" justify='space-between'>
+          <Space>
+            <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+              Reload
+            </Button>
+            {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
+          </Space>
           <Button 
             icon={<PlusCircleOutlined />} 
             color="primary" 
-            variant="outlined"
+            variant="dashed"
             onClick={() => navigate('/admin/product-category/create')}
           >
             Thêm danh mục
           </Button>
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : null}
         </Flex>
         <Flex vertical>
           <Flex justify='space-between' style={{padding: '16px 8px', backgroundColor: "white", borderRadius: "12px 12px 0 0"}}>
@@ -211,13 +219,7 @@ const ProductCategoryList = () => {
                 ]}
                 disabled={loading}
               />
-              <Search
-                style={{width: 300}}
-                placeholder="Nhập tên sản phẩm"
-                loading={loading}
-                disabled={loading}
-                onSearch={(v) => setFilters({ ...filters, keyword: v })}
-              />
+              <ChangeMulti ids={selectedRowKeys} reload={handleReload}/>
             </Space>
             <Space>
               <Dropdown

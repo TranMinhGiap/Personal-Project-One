@@ -1,6 +1,6 @@
 import { Tag, notification, Popconfirm } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined, CloseCircleFilled } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PATCH } from '../../../../utils/requests';
 
 const ChangeStatusTable = ({ id, status }) => {
@@ -8,6 +8,11 @@ const ChangeStatusTable = ({ id, status }) => {
   const [originalStatus, setOriginalStatus] = useState(status);
   const statusUpdate = originalStatus === "active" ? "inactive" : "active"
   const [api, contextHolderNoti] = notification.useNotification();
+  // do state chi set initial value một lần khi mount 
+  // parent re-render và truyền prop status mới (sau setData), state originalStatus không tự update theo prop => không cập nhật lại giá trị.
+  useEffect(() => {
+    setOriginalStatus(status);
+  }, [status]);
 
   const handleConfirm = async () => {
     try {
