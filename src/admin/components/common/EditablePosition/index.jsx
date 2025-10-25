@@ -1,6 +1,6 @@
 import { InputNumber, Popconfirm, notification } from "antd";
 import { useState } from "react";
-import { SmileOutlined, CloseCircleFilled } from '@ant-design/icons';
+import { SmileOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { PATCH } from "../../../../utils/requests";
 
 const EditablePosition = ({ value: initialValue, categorytId }) => {
@@ -39,7 +39,7 @@ const EditablePosition = ({ value: initialValue, categorytId }) => {
         description: error.message,
         showProgress: true,
         pauseOnHover: true,
-        icon: <CloseCircleFilled style={{ color: '#108ee9' }} />,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         placement: "topRight"
       });
       setValue(originalValue); // rollback nếu lỗi

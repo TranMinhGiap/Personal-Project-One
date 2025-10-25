@@ -1,5 +1,5 @@
 import { Tag, notification, Popconfirm } from 'antd';
-import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined, CloseCircleFilled } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { PATCH } from '../../../../utils/requests';
 
@@ -32,7 +32,7 @@ const ChangeStatusTable = ({ id, status }) => {
         description: error.message,
         showProgress: true,
         pauseOnHover: true,
-        icon: <CloseCircleFilled style={{ color: '#108ee9' }} />,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         placement: "topRight"
       });
     }

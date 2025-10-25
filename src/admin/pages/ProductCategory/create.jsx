@@ -1,10 +1,11 @@
-import { Card, Form, Input, Col, Row, Select, Button, InputNumber, Badge, notification } from 'antd';
+import { Card, Form, Input, Col, Row, Select, Button, InputNumber, Badge, notification, Flex } from 'antd';
 import { useEffect, useState } from 'react';
 import { GET, POST } from '../../../utils/requests';
 import MyEditor from '../../components/common/CKEditer';
 import UploadMultipleImages from '../../components/common/UploadMultipleImages';
 import { useNavigate } from "react-router-dom";
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import GoBack from '../../components/common/GoBack';
 
 const CreateProductCategory = () => {
 
@@ -40,7 +41,7 @@ const CreateProductCategory = () => {
         description: error.message,
         showProgress: true,
         pauseOnHover: true,
-        icon: <CloseCircleFilled style={{ color: '#108ee9' }} />,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         placement: "topRight"
       });
     } finally {
@@ -63,7 +64,10 @@ const CreateProductCategory = () => {
   return (
     <>
       {contextHolder}
-      <h2>Create Product Category</h2>
+      <Flex align='center' justify='space-between'>
+        <h2>Create Product Category</h2>
+        <GoBack/>
+      </Flex>
       <Card>
         <Form
           form={form}
