@@ -1,8 +1,10 @@
 import { Button, Dropdown } from 'antd';
 import { MoreOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
 
 const ActionTable = (props) => {
-  const { record, url } = props;
+  const { url } = props;
+  const navigate = useNavigate();
 
   const items = [
     {
@@ -12,7 +14,7 @@ const ActionTable = (props) => {
       ),
       onClick: () => {
         // Logic xem chi tiết (ví dụ: navigate(`/detail/${record._id}`))
-        console.log('View:', record._id);
+        navigate(`/admin/${url}`);
       },
     },
     {
@@ -22,7 +24,6 @@ const ActionTable = (props) => {
       ),
       onClick: () => {
         // Logic sửa (ví dụ: mở modal edit)
-        console.log('Edit:', record._id);
       },
     },
     {
@@ -32,7 +33,6 @@ const ActionTable = (props) => {
       ),
       onClick: () => {
         // Logic xóa (ví dụ: confirm rồi API delete)
-        console.log('Delete:', record._id);
       },
     },
   ]

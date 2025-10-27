@@ -1,5 +1,5 @@
 import { Tag, notification, Popconfirm } from 'antd';
-import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { PATCH } from '../../../../utils/requests';
 
