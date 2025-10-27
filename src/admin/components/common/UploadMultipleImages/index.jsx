@@ -632,6 +632,28 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
   const [previewImage, setPreviewImage] = useState('');
 
   useEffect(() => {
+    if (!Array.isArray(value)) return;
+
+    // 🔹 Nếu value giống với danh sách ảnh hiện tại => không làm gì
+    const currentUrls = fileList.filter(f => f.status === 'success').map(f => f.url);
+    const isSame = JSON.stringify(currentUrls) === JSON.stringify(value);
+    if (isSame) return;
+
+    // 🔹 Chuyển các URL thành file object (chỉ cho ảnh đã có)
+    const existingFiles = value.map((url, index) => ({
+      uid: `existing-${url}`, // 🔸 Giữ ổn định theo URL, không dùng Date.now()
+      name: url.split('/').pop() || `image-${index}.jpg`,
+      status: 'success',
+      url,
+      percent: 100,
+    }));
+
+    // 🔹 Giữ nguyên file đang upload hoặc lỗi
+    setFileList(prev => {
+      const uploadingOrError = prev.filter(f => f.status !== 'success');
+      return [...existingFiles, ...uploadingOrError];
+    });
+
     setImages(value);
   }, [value]);
 

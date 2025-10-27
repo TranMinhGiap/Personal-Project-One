@@ -5,6 +5,7 @@ import ProductCategory from "../pages/ProductCategory";
 import ProductCategoryList from "../pages/ProductCategory/list";
 import CreateProductCategory from "../pages/ProductCategory/create";
 import DetailProductCategory from "../pages/ProductCategory/detail";
+import EditProductCategory from "../pages/ProductCategory/edit";
 
 const routesAdmin = [
   {
@@ -30,6 +31,10 @@ const routesAdmin = [
           {
             path: "detail/:id",
             element: <DetailProductCategory/>
+          },
+          {
+            path: "edit/:id",
+            element: <EditProductCategory/>
           }
         ]
       }

@@ -31,7 +31,7 @@ const ChangeMulti = ({ids, reload}) => {
       api.open({
         message: 'Chưa có danh mục cần thay đổi',
         description: "Chọn ít nhất 1 danh mục sản phẩm để thay đổi trạng thái",
-        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         showProgress: true,
         pauseOnHover: true,
         placement: "topRight"

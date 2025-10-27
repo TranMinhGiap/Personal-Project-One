@@ -42,7 +42,7 @@ const ActionTable = (props) => {
       ),
       onClick: () => {
         // Logic xem chi tiết (ví dụ: navigate(`/detail/${record._id}`))
-        navigate(`/admin/${url}`);
+        navigate(`/admin/${url}/detail/${id}`);
       },
     },
     {
@@ -52,6 +52,7 @@ const ActionTable = (props) => {
       ),
       onClick: () => {
         // Logic sửa (ví dụ: mở modal edit)
+        navigate(`/admin/${url}/edit/${id}`);
       },
     },
     {
