@@ -134,7 +134,7 @@ const ProductCategoryList = () => {
       dataIndex: "action",
       width: 70,
       render: (_, record) => (
-        <ActionTable url={`product-category/detail/${record["_id"]}`}/>
+        <ActionTable id={record["_id"]} reload={handleReload} url={`product-category/detail/${record["_id"]}`} api={api} />
       )
     }
   ];

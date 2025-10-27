@@ -44,12 +44,12 @@ const ChangeMulti = ({ids, reload}) => {
       await PATCH(`/api/v1/admin/product-category/change-multi`, { ids : ids, type : type});
       reload();
       api.open({
-        message: 'Thay đổi trạng thái thành công',
-        description: "Danh mục sản phẩm được tích đã được thay đổi trạng thái",
-        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        message: 'Thay đổi thành công',
+        description: "Danh mục sản phẩm đã được thay đổi trạng thái",
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         showProgress: true,
         pauseOnHover: true,
-        placement: "topRight"
+        placement: "topRight",
       });
     } catch (error) {
       api.open({

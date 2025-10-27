@@ -1,10 +1,38 @@
-import { Button, Dropdown } from 'antd';
-import { MoreOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Popconfirm } from 'antd';
+import { MoreOutlined, EyeOutlined, EditOutlined, DeleteOutlined, CloseCircleOutlined, SmileOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
+import { DELETE } from '../../../../utils/requests';
 
 const ActionTable = (props) => {
-  const { url } = props;
+  const { id, url, reload, api } = props;
   const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      await DELETE(`/api/v1/admin/product-category/delete/${id}`);
+      api.open({
+        message: 'Xóa danh mục thành công',
+        description: "Danh mục sản phẩm đã được xóa",
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+        showProgress: true,
+        pauseOnHover: true,
+        placement: "topRight",
+        // onClose: () => {
+        //   reload(); // reload lại và chỉ reload sau khi notification đóng
+        // }
+      });
+      reload();
+    } catch (error) {
+      api.open({
+        message: "Có lỗi khi xóa danh mục sản phẩm! Vui lòng thử lại",
+        description: error.message,
+        showProgress: true,
+        pauseOnHover: true,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        placement: "topRight"
+      });
+    }
+  }
 
   const items = [
     {
@@ -29,11 +57,17 @@ const ActionTable = (props) => {
     {
       key: 'delete',
       label: (
-        <Button color="danger" variant="filled" icon={<DeleteOutlined />}></Button>
+        <Popconfirm
+          title="Xác nhận xóa!"
+          description="Bạn chắc chắn muốn xóa?"
+          onConfirm={handleDelete}
+          okText="Có"
+          cancelText="Hủy"
+        >
+          <Button color="danger" variant="filled" icon={<DeleteOutlined />} onClick={(e) => e.stopPropagation()} />
+        </Popconfirm>
       ),
-      onClick: () => {
-        // Logic xóa (ví dụ: confirm rồi API delete)
-      },
+      // onClick={(e) => e.stopPropagation() : chặn sự kiện click không lan ra tới Dropdown ⇒ Dropdown không đóng sớm nữa
     },
   ]
 
