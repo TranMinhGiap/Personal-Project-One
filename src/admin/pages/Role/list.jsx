@@ -59,7 +59,7 @@ const RoleList = () => {
       setLoading(true);
       if (location.state?.success) {
         api.open({
-          message: 'Thêm mới danh mục sản phẩm thành công',
+          message: 'Thêm mới nhóm quyền thành công',
           description: "Đã thêm 1 danh mục mới",
           icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           showProgress: true,

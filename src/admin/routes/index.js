@@ -8,6 +8,7 @@ import DetailProductCategory from "../pages/ProductCategory/detail";
 import EditProductCategory from "../pages/ProductCategory/edit";
 import Role from "../pages/Role";
 import RoleList from "../pages/Role/list";
+import CreateRole from "../pages/Role/create";
 
 const routesAdmin = [
   {
@@ -47,6 +48,10 @@ const routesAdmin = [
           {
             index: true,
             element: <RoleList/>
+          },
+          {
+            path: "create",
+            element: <CreateRole/>
           }
         ]
       }
