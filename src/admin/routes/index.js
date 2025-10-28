@@ -6,6 +6,8 @@ import ProductCategoryList from "../pages/ProductCategory/list";
 import CreateProductCategory from "../pages/ProductCategory/create";
 import DetailProductCategory from "../pages/ProductCategory/detail";
 import EditProductCategory from "../pages/ProductCategory/edit";
+import Role from "../pages/Role";
+import RoleList from "../pages/Role/list";
 
 const routesAdmin = [
   {
@@ -35,6 +37,16 @@ const routesAdmin = [
           {
             path: "edit/:id",
             element: <EditProductCategory/>
+          }
+        ]
+      },
+      {
+        path: "roles",
+        element: <Role/>,
+        children: [
+          {
+            index: true,
+            element: <RoleList/>
           }
         ]
       }

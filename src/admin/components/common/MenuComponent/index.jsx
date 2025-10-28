@@ -18,13 +18,11 @@ const MenuComponent = (props) => {
     { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
     {
       key: 'sub1',
-      label: 'Navigation One',
+      label: 'Quyền',
       icon: <MailOutlined />,
       children: [
-        { key: '5', label: 'Option 5' },
-        { key: '6', label: 'Option 6' },
-        { key: '7', label: 'Option 7' },
-        { key: '8', label: 'Option 8' },
+        { key: '5', icon: <DesktopOutlined />, label: <Link to={`${prefix}/roles`}>Nhóm quyền</Link> },
+        { key: '6', icon: <DesktopOutlined />, label: <Link to={`${prefix}/permissions`}>Phần quyền</Link> },
       ],
     },
     {
