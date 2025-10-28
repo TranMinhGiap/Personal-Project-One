@@ -3,7 +3,7 @@ import { CheckCircleOutlined, CloseCircleOutlined, SmileOutlined } from '@ant-de
 import { useEffect, useState } from 'react';
 import { PATCH } from '../../../../utils/requests';
 
-const ChangeStatusTable = ({ id, status }) => {
+const ChangeStatusTable = ({ id, status, url }) => {
 
   const [originalStatus, setOriginalStatus] = useState(status);
   const statusUpdate = originalStatus === "active" ? "inactive" : "active"
@@ -16,10 +16,10 @@ const ChangeStatusTable = ({ id, status }) => {
 
   const handleConfirm = async () => {
     try {
-      await PATCH(`/api/v1/admin/product-category/change-status/${id}`, { status : statusUpdate} );
+      await PATCH(`/api/v1/admin/${url}/change-status/${id}`, { status : statusUpdate} );
       api.open({
         message: 'Cập nhật trạng thái thành công',
-        description: "Danh mục sản phẩm đã được cập nhật trạng thái",
+        description: "Danh mục đã được cập nhật trạng thái",
         icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         showProgress: true,
         pauseOnHover: true,
@@ -28,7 +28,7 @@ const ChangeStatusTable = ({ id, status }) => {
       setOriginalStatus(statusUpdate);
     } catch (error) {
       api.open({
-        message: "Có lỗi khi cập nhật trạng thái danh mục sản phẩm! Vui lòng thử lại",
+        message: "Có lỗi khi cập nhật trạng thái danh mục! Vui lòng thử lại",
         description: error.message,
         showProgress: true,
         pauseOnHover: true,
