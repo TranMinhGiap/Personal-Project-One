@@ -9,7 +9,7 @@ const ActionTable = (props) => {
 
   const handleDelete = async () => {
     try {
-      await DELETE(`/api/v1/admin/product-category/delete/${id}`);
+      await DELETE(`/api/v1/admin/${url}/delete/${id}`);
       api.open({
         message: 'Xóa danh mục thành công',
         description: "Danh mục sản phẩm đã được xóa",
