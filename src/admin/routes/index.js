@@ -10,6 +10,7 @@ import Role from "../pages/Role";
 import RoleList from "../pages/Role/list";
 import CreateRole from "../pages/Role/create";
 import RoleDetail from "../pages/Role/detail";
+import EditRole from "../pages/Role/edit";
 
 const routesAdmin = [
   {
@@ -57,6 +58,10 @@ const routesAdmin = [
           {
             path: "detail/:id",
             element: <RoleDetail/>
+          },
+          {
+            path: "edit/:id",
+            element: <EditRole/>
           }
         ]
       }
