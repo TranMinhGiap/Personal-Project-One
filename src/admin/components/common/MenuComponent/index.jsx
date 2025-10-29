@@ -22,7 +22,7 @@ const MenuComponent = (props) => {
       icon: <MailOutlined />,
       children: [
         { key: '5', icon: <DesktopOutlined />, label: <Link to={`${prefix}/roles`}>Nhóm quyền</Link> },
-        { key: '6', icon: <DesktopOutlined />, label: <Link to={`${prefix}/permissions`}>Phần quyền</Link> },
+        { key: '6', icon: <DesktopOutlined />, label: <Link to={`${prefix}/roles/permissions`}>Phần quyền</Link> },
       ],
     },
     {
