@@ -14,8 +14,9 @@ const MenuComponent = (props) => {
 
   const items = [
     { key: '1', icon: <PieChartOutlined />, label: <Link to={`${prefix}`}>Dashboard</Link> },
-    { key: '2', icon: <DesktopOutlined />, label: <Link to={`${prefix}/product-category`}>Product Category</Link> },
-    { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
+    { key: '2', icon: <DesktopOutlined />, label: <Link to={`${prefix}/product-category`}>Danh mục sản phẩm</Link> },
+    { key: '3', icon: <DesktopOutlined />, label: <Link to={`${prefix}/products`}>Sản phẩm</Link> },
+    { key: '4', icon: <ContainerOutlined />, label: <Link to={`${prefix}/accounts`}>Tài khoản</Link> },
     {
       key: 'sub1',
       label: 'Quyền',

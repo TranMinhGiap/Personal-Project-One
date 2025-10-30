@@ -12,6 +12,8 @@ import CreateRole from "../pages/Role/create";
 import RoleDetail from "../pages/Role/detail";
 import EditRole from "../pages/Role/edit";
 import RolePermissions from "../pages/Role/permissions";
+import Account from "../pages/Account";
+import AccountList from "../pages/Account/list";
 
 const routesAdmin = [
   {
@@ -67,6 +69,16 @@ const routesAdmin = [
           {
             path: "permissions",
             element: <RolePermissions/>
+          }
+        ]
+      },
+      {
+        path: "accounts",
+        element: <Account/>,
+        children: [
+          {
+            index: true,
+            element: <AccountList/>
           }
         ]
       }
