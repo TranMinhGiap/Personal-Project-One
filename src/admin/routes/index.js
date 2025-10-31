@@ -14,6 +14,7 @@ import EditRole from "../pages/Role/edit";
 import RolePermissions from "../pages/Role/permissions";
 import Account from "../pages/Account";
 import AccountList from "../pages/Account/list";
+import CreateAccount from "../pages/Account/create";
 
 const routesAdmin = [
   {
@@ -79,6 +80,10 @@ const routesAdmin = [
           {
             index: true,
             element: <AccountList/>
+          },
+          {
+            path: "create",
+            element: <CreateAccount/>
           }
         ]
       }
