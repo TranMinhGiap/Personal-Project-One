@@ -15,6 +15,7 @@ import RolePermissions from "../pages/Role/permissions";
 import Account from "../pages/Account";
 import AccountList from "../pages/Account/list";
 import CreateAccount from "../pages/Account/create";
+import EditAccount from "../pages/Account/edit";
 
 const routesAdmin = [
   {
@@ -84,6 +85,10 @@ const routesAdmin = [
           {
             path: "create",
             element: <CreateAccount/>
+          },
+          {
+            path: "edit/:id",
+            element: <EditAccount/>
           }
         ]
       }
