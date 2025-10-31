@@ -156,6 +156,14 @@ const CreateAccount = () => {
                 />
               </Form.Item>
             </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label="Quê quán"
+                name="hometown"
+              >
+                <Input placeholder="VD: Thái Bình" />
+              </Form.Item>
+            </Col>
             <Col xs={24}>
               <Form.Item>
                 <Button 

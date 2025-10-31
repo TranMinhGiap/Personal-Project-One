@@ -12,7 +12,7 @@ const ActionTable = (props) => {
       await DELETE(`/api/v1/admin/${url}/delete/${id}`);
       api.open({
         message: 'Xóa danh mục thành công',
-        description: "Danh mục sản phẩm đã được xóa",
+        description: "Danh mục được chọn đã bị xóa",
         icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         showProgress: true,
         pauseOnHover: true,

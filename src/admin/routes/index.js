@@ -16,6 +16,7 @@ import Account from "../pages/Account";
 import AccountList from "../pages/Account/list";
 import CreateAccount from "../pages/Account/create";
 import EditAccount from "../pages/Account/edit";
+import AccountDetail from "../pages/Account/detail";
 
 const routesAdmin = [
   {
@@ -89,6 +90,10 @@ const routesAdmin = [
           {
             path: "edit/:id",
             element: <EditAccount/>
+          },
+          {
+            path: "detail/:id",
+            element: <AccountDetail/>
           }
         ]
       }
