@@ -1,24 +1,18 @@
-.header {
-  position: sticky;       
-  top: 0;
-  z-index: 100;           
-  background: rgba(255, 255, 255, 0.6); 
-  backdrop-filter: blur(10px);          
-  -webkit-backdrop-filter: blur(10px);   
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0 20px;
-  &__left{
-    max-width: 35%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.item-info{
+  color: #637381;
+  transition: all 0.2s ease;
+  padding: 10px 20px;
+  border: 1px solid #919eab14;
+  border-radius: 8px;
+  &__link{
+    color: #637381 !important;
+    transition: all 0.2s ease;
   }
-  &__collapsed{
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    &:hover{
-      color: rgb(88, 88, 255);
+  &:hover{
+    background-color: #919eab14;
+    color: #1c252e;
+    &__link{
+      color: #1c252e !important;
     }
   }
 }
