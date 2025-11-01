@@ -17,6 +17,7 @@ import AccountList from "../pages/Account/list";
 import CreateAccount from "../pages/Account/create";
 import EditAccount from "../pages/Account/edit";
 import AccountDetail from "../pages/Account/detail";
+import MyAccountEdit from "../pages/MyAccount/edit";
 
 const routesAdmin = [
   {
@@ -96,6 +97,10 @@ const routesAdmin = [
             element: <AccountDetail/>
           }
         ]
+      },
+      {
+        path: "my-accounts/edit",
+        element: <MyAccountEdit/>
       }
     ]
   },

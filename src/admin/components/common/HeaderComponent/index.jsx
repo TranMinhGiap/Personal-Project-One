@@ -2,11 +2,10 @@ import { Layout, Space, Drawer, Flex, Image, Divider, Button } from 'antd';
 import './Header.scss';
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SettingOutlined, PicRightOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from '../../../features/auth/authSlice';
+import MyAccount from '../../../pages/MyAccount';
 //=================================
 const { Header } = Layout;
 
@@ -100,9 +99,15 @@ const HeaderComponent = (props) => {
                   <PicRightOutlined />
                   <Space className='item-info__link'>Thông tin tài khoản</Space>
                 </Space>
-                <Space className='item-info'>
+                <Space
+                  className='item-info'
+                  onClick={() => {
+                    navigate('/admin/my-accounts/edit');
+                    onClose();
+                  }}
+                >
                   <SettingOutlined/>
-                  <Link className='item-info__link' to={`/admin/my-accounts/edit`}>Cài đặt</Link>
+                  <Space className='item-info__link'>Cài đặt</Space>
                 </Space>
               </Flex>
             </Flex>
@@ -113,7 +118,7 @@ const HeaderComponent = (props) => {
               onClose={onChildrenDrawerClose}
               open={childrenDrawer}
             >
-              Thông tin tài khoản
+              <MyAccount />
             </Drawer>
           </Drawer>
         </Space>
