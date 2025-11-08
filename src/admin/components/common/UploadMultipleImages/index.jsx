@@ -625,37 +625,38 @@ import { PlusOutlined, EyeOutlined, DeleteOutlined, PictureOutlined } from '@ant
 import { ReactSortable } from 'react-sortablejs';
 
 const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploading = false }) => {
-  const [images, setImages] = useState(value);
+  // 🔹 Fallback ngay từ đầu: Nếu value không phải array thì gán thành [] 
+  const normalizedValue = Array.isArray(value) ? value : [];
+  
+  const [images, setImages] = useState(normalizedValue);  // Bắt đầu luôn là array
   const [fileList, setFileList] = useState([]); // { uid, name, status, percent, url? }
   const [uploading, setUploading] = useState(externalUploading);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
   useEffect(() => {
-    if (!Array.isArray(value)) return;
-
-    // 🔹 Nếu value giống với danh sách ảnh hiện tại => không làm gì
+    // Dùng normalizedValue để sync fileList từ existing URLs (không skip khi undefined)
     const currentUrls = fileList.filter(f => f.status === 'success').map(f => f.url);
-    const isSame = JSON.stringify(currentUrls) === JSON.stringify(value);
+    const isSame = JSON.stringify(currentUrls) === JSON.stringify(normalizedValue);
     if (isSame) return;
 
-    // 🔹 Chuyển các URL thành file object (chỉ cho ảnh đã có)
-    const existingFiles = value.map((url, index) => ({
-      uid: `existing-${url}`, // 🔸 Giữ ổn định theo URL, không dùng Date.now()
+    // Chuyển các URL thành file object (chỉ cho ảnh đã có)
+    const existingFiles = normalizedValue.map((url, index) => ({
+      uid: `existing-${url}`, // Giữ ổn định theo URL
       name: url.split('/').pop() || `image-${index}.jpg`,
       status: 'success',
       url,
       percent: 100,
     }));
 
-    // 🔹 Giữ nguyên file đang upload hoặc lỗi
+    // Giữ nguyên file đang upload hoặc lỗi
     setFileList(prev => {
       const uploadingOrError = prev.filter(f => f.status !== 'success');
       return [...existingFiles, ...uploadingOrError];
     });
 
-    setImages(value);
-  }, [value]);
+    setImages(normalizedValue);  // Sync với normalized (luôn array)
+  }, [normalizedValue]);  // Depend trên normalizedValue
 
   const handleUpload = async ({ file, onSuccess, onError }) => {
     const newFile = { uid: file.uid, name: file.name, status: 'uploading', percent: 0 };
@@ -689,12 +690,13 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
 
       clearInterval(interval);
 
-      // update that file to success (use prev state to avoid stale fileList)
+      // Update file to success
       setFileList(prev => prev.map(f => (f.uid === file.uid ? { ...f, status: 'success', url: imageUrl, percent: 100 } : f)));
 
+      // Bây giờ images luôn là array → Spread an toàn
       const updatedImages = [...images, imageUrl];
       setImages(updatedImages);
-      onChange && onChange(updatedImages);
+      onChange && onChange(updatedImages);  // Trả array lên Form
 
       onSuccess && onSuccess({ url: imageUrl });
       message.success('Tải ảnh thành công!');
@@ -713,14 +715,14 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
   };
 
   const handleReorder = (newOrder) => {
-    // Cập nhật fileList theo thứ tự mới (tất cả items, bao gồm temp như uploading/error)
+    // Cập nhật fileList theo thứ tự mới (tất cả items, bao gồm temp)
     const newFileList = newOrder.map(({ id, ...rest }) => ({
       uid: id,
       ...rest,
     }));
     setFileList(newFileList);
 
-    // Extract chỉ success urls để update images
+    // Extract chỉ success urls → Luôn array
     const newImages = newFileList
       .filter((item) => item.status === 'success')
       .map((item) => item.url);
@@ -738,12 +740,12 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
     // Xóa khỏi fileList (chỉ success items có url)
     setFileList(prev => prev.filter(f => f.status !== 'success' || f.url !== url));
 
-    // Xóa khỏi images và push lên parent
+    // Bây giờ images luôn là array → Filter an toàn
     const updated = images.filter(img => img !== url);
     setImages(updated);
-    onChange && onChange(updated);
+    onChange && onChange(updated);  // Trả array lên Form
 
-    message.success('Đã xóa ảnh!');  // Feedback cho user
+    message.success('Đã xóa ảnh!');
   };
 
   // Render thumbnail theo status
@@ -780,7 +782,6 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
     }
 
     if (file.status === 'error') {
-      // CHỈ HIỂN THỊ ICON + TÊN + CHỮ "Xóa" TRÊN GÓC PHẢI (bỏ dấu X đỏ)
       return (
         <div
           style={{
@@ -802,7 +803,6 @@ const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploadi
           <PictureOutlined style={{ fontSize: 28, color: '#ff4d4f', marginBottom: 8 }} />
           <div style={{ fontSize: 12, color: '#ff4d4f', textAlign: 'center' }}>{fileName}</div>
 
-          {/* CHỮ "Xóa" ở góc phải - vẫn giữ */}
           <div
             style={{
               position: 'absolute',

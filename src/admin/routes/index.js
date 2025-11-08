@@ -18,6 +18,9 @@ import CreateAccount from "../pages/Account/create";
 import EditAccount from "../pages/Account/edit";
 import AccountDetail from "../pages/Account/detail";
 import MyAccountEdit from "../pages/MyAccount/edit";
+import Product from "../pages/Product";
+import ProductList from "../pages/Product/list";
+import CreateProduct from "../pages/Product/create";
 
 const routesAdmin = [
   {
@@ -47,6 +50,20 @@ const routesAdmin = [
           {
             path: "edit/:id",
             element: <EditProductCategory/>
+          }
+        ]
+      },
+      {
+        path: "products",
+        element: <Product/>,
+        children: [
+          {
+            index: true,
+            element: <ProductList/>
+          },
+          {
+            path: "create",
+            element: <CreateProduct/>
           }
         ]
       },
