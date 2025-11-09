@@ -135,7 +135,7 @@ const ProductList = () => {
       title: 'Vị trí', 
       dataIndex: 'position',
       render: (_, record) => (
-        <EditablePosition value={record.position} categorytId={record["_id"]} />
+        <EditablePosition id={record["_id"]} position={record.position} url="products" />
       )
     },
     { 

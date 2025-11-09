@@ -3,9 +3,9 @@ import { useState } from "react";
 import { SmileOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { PATCH } from "../../../../utils/requests";
 
-const EditablePosition = ({ value: initialValue, categorytId }) => {
-  const [value, setValue] = useState(initialValue);
-  const [originalValue, setOriginalValue] = useState(initialValue);
+const EditablePosition = ({ id, url, position }) => {
+  const [value, setValue] = useState(position);
+  const [originalValue, setOriginalValue] = useState(position);
   const [showConfirm, setShowConfirm] = useState(false);
   const [api, contextHolderNoti] = notification.useNotification();
 
@@ -23,10 +23,10 @@ const EditablePosition = ({ value: initialValue, categorytId }) => {
 
   const handleConfirm = async () => {
     try {
-      await PATCH(`/api/v1/admin/product-category/change-position/${categorytId}`, { position : value} )
+      await PATCH(`/api/v1/admin/${url}/change-position/${id}`, { position : value} )
       api.open({
         message: 'Thay đổi vị trí thành công',
-        description: "Danh mục sản phẩm đã được thay đổi vị trí",
+        description: "Danh mục đã được thay đổi vị trí",
         icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         showProgress: true,
         pauseOnHover: true,
@@ -35,7 +35,7 @@ const EditablePosition = ({ value: initialValue, categorytId }) => {
       setOriginalValue(value);
     } catch (error) {
       api.open({
-        message: "Có lỗi khi thay đổi vị trí danh mục sản phẩm! Vui lòng thử lại",
+        message: "Có lỗi khi thay đổi vị trí danh mục ! Vui lòng thử lại",
         description: error.message,
         showProgress: true,
         pauseOnHover: true,
