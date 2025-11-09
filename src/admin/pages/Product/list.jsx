@@ -43,6 +43,18 @@ const ProductList = () => {
     limit: pagination.pageSize,
   };
 
+  let moreOptions = [
+    {
+      value: 'isFeatured',
+      label: <Badge status="processing" text="Nổi bật" />,
+      
+    },
+    {
+      value: 'notFeatured',
+      label: <Badge status="default" text="Bình thường" />,
+    }
+  ]
+
   const { getColumnSearchProps } = useTableSearch((value) => {
     setFilters(prev => ({
       ...prev,
@@ -247,7 +259,7 @@ const ProductList = () => {
                 ]}
                 disabled={loading}
               />
-              <ChangeMulti ids={selectedRowKeys} reload={handleReload} url="product-category"/>
+              <ChangeMulti ids={selectedRowKeys} reload={handleReload} url="products" moreOptions={moreOptions} />
             </Space>
             <Space>
               <Dropdown

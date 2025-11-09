@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { SmileOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { PATCH } from '../../../../utils/requests';
 
-const ChangeMulti = ({ids, reload, url}) => {
+const ChangeMulti = ({ids, reload, url, moreOptions = []}) => {
 
   const [type, setType] = useState(undefined);
   const [open, setOpen] = useState(false);
   const [api, contextHolderNoti] = notification.useNotification();
 
-  const options = [
+  let options = [
     {
       value: 'active',
       label: <Badge status="success" text="Hoạt động" />,
@@ -24,6 +24,13 @@ const ChangeMulti = ({ids, reload, url}) => {
       label: <Badge status="error" text="Xóa" />,
     },
   ]
+
+  if (moreOptions.length > 0) {
+    options = [
+      ...moreOptions,
+      ...options
+    ]
+  }
 
   const handleConfirm = async () => {
     // logic update
