@@ -142,7 +142,7 @@ const ProductList = () => {
       title: 'Đặc điểm', 
       dataIndex: 'position',
       render: (_, record) => (
-        <ChangeFeatured featured={record.featured} id={record['_id']} url={'products'} api={api} />
+        <ChangeFeatured id={record['_id']} featured={record.featured} url={'products'} api={api} />
       )
     },
     { 
