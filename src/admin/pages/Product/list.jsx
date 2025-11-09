@@ -128,7 +128,7 @@ const ProductList = () => {
       title: 'Trạng thái', 
       dataIndex: 'status',
       render: (_, record) => (
-        <ChangeStatusTable id={record["_id"]} status={record.status} url="product-category"/>
+        <ChangeStatusTable id={record["_id"]} status={record.status} url="products"/>
       )
     },
     { 
