@@ -625,7 +625,7 @@ import { PlusOutlined, EyeOutlined, DeleteOutlined, PictureOutlined } from '@ant
 import { ReactSortable } from 'react-sortablejs';
 
 const UploadMultipleImages = ({ value = [], onChange, uploading: externalUploading = false }) => {
-  // 🔹 Fallback ngay từ đầu: Nếu value không phải array thì gán thành [] 
+  // Fallback ngay từ đầu: Nếu value không phải array thì gán thành [] 
   const normalizedValue = Array.isArray(value) ? value : [];
   
   const [images, setImages] = useState(normalizedValue);  // Bắt đầu luôn là array

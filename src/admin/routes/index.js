@@ -21,6 +21,7 @@ import MyAccountEdit from "../pages/MyAccount/edit";
 import Product from "../pages/Product";
 import ProductList from "../pages/Product/list";
 import CreateProduct from "../pages/Product/create";
+import ProductDetail from "../pages/Product/detail";
 
 const routesAdmin = [
   {
@@ -64,6 +65,10 @@ const routesAdmin = [
           {
             path: "create",
             element: <CreateProduct/>
+          },
+          {
+            path: "detail/:id",
+            element: <ProductDetail/>
           }
         ]
       },
