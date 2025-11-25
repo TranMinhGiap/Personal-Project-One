@@ -1,0 +1,113 @@
+.footer.footer-client {
+  background: #222;
+  color: #eee;
+  padding-top: 20px;
+  margin-top: 40px;
+}
+
+/* Newsletter */
+.footer-newsletter {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-bottom: 1px solid #333;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #ccc;
+    font-size: 14px;
+  }
+
+  .newsletter-input {
+    max-width: 380px;
+  }
+}
+
+/* Main footer */
+.footer-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.footer-desc {
+  color: #bbb;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.footer-links{
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-contact li,
+.footer-links li {
+  list-style: none;
+  margin-bottom: 6px;
+  color: #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  svg {
+    font-size: 14px;
+  }
+}
+
+.footer-links li:hover {
+  color: #fadb14;
+}
+
+/* Social */
+.footer-social svg {
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    color: #1890ff;
+  }
+}
+
+/* Payment tags */
+.footer-payments {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.payment-tag {
+  border: 1px solid #555;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 12px 0;
+  background: #1a1a1a;
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-newsletter {
+    text-align: left;
+    padding-bottom: 10px;
+  }
+}
